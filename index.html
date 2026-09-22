@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Epic Earthbound | Photo Gallery</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050608;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    border-radius:50%;
+    background:radial-gradient(circle,
+        rgba(0,180,255,.10),
+        transparent 65%);
+    top:-250px;
+    left:-200px;
+    pointer-events:none;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    border-radius:50%;
+    background:radial-gradient(circle,
+        rgba(255,130,40,.08),
+        transparent 65%);
+    bottom:-250px;
+    right:-200px;
+    pointer-events:none;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:75px;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    background:rgba(5,6,8,.65);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+    font-size:20px;
+    font-weight:800;
+    letter-spacing:3px;
+}
+
+.logo span{
+    color:#39d9ff;
+}
+
+.nav-btn{
+    text-decoration:none;
+    color:white;
+    padding:11px 20px;
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,.18);
+    transition:.3s;
+}
+
+.nav-btn:hover{
+    background:white;
+    color:black;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:90vh;
+    padding:150px 7% 80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.badge{
+    display:inline-block;
+    padding:9px 18px;
+    border:1px solid rgba(57,217,255,.35);
+    border-radius:30px;
+    color:#62e2ff;
+    background:rgba(0,180,255,.06);
+    font-size:13px;
+    letter-spacing:2px;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:clamp(50px,9vw,110px);
+    line-height:.9;
+    letter-spacing:-5px;
+    margin-bottom:30px;
+}
+
+.hero h1 span{
+    color:#39d9ff;
+}
+
+.hero p{
+    max-width:650px;
+    margin:auto;
+    color:#a8adb7;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.hero-buttons{
+    margin-top:35px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.primary{
+    text-decoration:none;
+    color:#001015;
+    background:#39d9ff;
+    padding:15px 27px;
+    border-radius:40px;
+    font-weight:bold;
+    box-shadow:0 0 30px rgba(57,217,255,.25);
+    transition:.3s;
+}
+
+.primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 45px rgba(57,217,255,.45);
+}
+
+.secondary{
+    text-decoration:none;
+    color:white;
+    border:1px solid rgba(255,255,255,.2);
+    padding:15px 27px;
+    border-radius:40px;
+    transition:.3s;
+}
+
+.secondary:hover{
+    background:white;
+    color:black;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+    padding:80px 7%;
+}
+
+.section-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:30px;
+    margin-bottom:35px;
+}
+
+.section-top h2{
+    font-size:45px;
+    letter-spacing:-2px;
+}
+
+.section-top p{
+    color:#888e99;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search{
+    width:100%;
+    max-width:450px;
+    padding:15px 20px;
+    border-radius:40px;
+    border:1px solid rgba(255,255,255,.12);
+    background:#0b0d11;
+    color:white;
+    outline:none;
+    margin-bottom:35px;
+}
+
+.search:focus{
+    border-color:#39d9ff;
+}
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.photo{
+    position:relative;
+    height:420px;
+    overflow:hidden;
+    border-radius:20px;
+    background:#111;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,.06);
+    opacity:0;
+    transform:translateY(25px);
+    animation:appear .8s forwards;
+}
+
+.photo:nth-child(2){animation-delay:.1s}
+.photo:nth-child(3){animation-delay:.2s}
+.photo:nth-child(4){animation-delay:.3s}
+.photo:nth-child(5){animation-delay:.4s}
+.photo:nth-child(6){animation-delay:.5s}
+
+@keyframes appear{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.7s;
+}
+
+.photo:hover img{
+    transform:scale(1.08);
+}
+
+.photo::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        transparent 45%,
+        rgba(0,0,0,.8)
+    );
+}
+
+.photo-info{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    right:20px;
+    z-index:2;
+}
+
+.photo-info h3{
+    font-size:20px;
+    margin-bottom:5px;
+}
+
+.photo-info p{
+    color:#c7cbd2;
+    font-size:13px;
+}
+
+/* =========================
+   FEATURED
+========================= */
+
+.featured{
+    margin-top:100px;
+}
+
+.feature-card{
+    min-height:420px;
+    border-radius:30px;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    align-items:end;
+    padding:45px;
+    background:
+      linear-gradient(90deg,
+      rgba(0,0,0,.8),
+      rgba(0,0,0,.1)),
+      url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=90")
+      center/cover;
+}
+
+.feature-card h2{
+    font-size:clamp(35px,5vw,65px);
+    max-width:650px;
+}
+
+.feature-card p{
+    margin-top:15px;
+    color:#ddd;
+}
+
+/* =========================
+   INSTAGRAM
+========================= */
+
+.instagram{
+    text-align:center;
+    padding:120px 7%;
+}
+
+.instagram h2{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.instagram p{
+    color:#9298a3;
+    max-width:600px;
+    margin:auto;
+    line-height:1.7;
+}
+
+.instagram-btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:16px 30px;
+    border-radius:40px;
+    color:white;
+    text-decoration:none;
+    background:linear-gradient(
+        90deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+    font-weight:bold;
+    box-shadow:0 10px 35px rgba(200,50,100,.25);
+}
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+#lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.94);
+    z-index:999;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+#lightbox img{
+    max-width:95%;
+    max-height:90vh;
+    object-fit:contain;
+    border-radius:15px;
+    box-shadow:0 0 50px rgba(0,200,255,.12);
+}
+
+.close{
+    position:absolute;
+    top:25px;
+    right:30px;
+    font-size:35px;
+    color:white;
+    cursor:pointer;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:35px 7%;
+    border-top:1px solid rgba(255,255,255,.08);
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    color:#777;
+}
+
+footer span{
+    color:#39d9ff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+    .gallery{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .photo{
+        height:350px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    nav{
+        padding:0 5%;
+    }
+
+    .logo{
+        font-size:15px;
+    }
+
+    .nav-btn{
+        padding:8px 13px;
+        font-size:13px;
+    }
+
+    .hero{
+        padding:130px 6% 70px;
+    }
+
+    .hero h1{
+        font-size:55px;
+        letter-spacing:-3px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    section{
+        padding:60px 6%;
+    }
+
+    .section-top{
+        display:block;
+    }
+
+    .section-top h2{
+        font-size:38px;
+        margin-bottom:10px;
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
+    }
+
+    .photo{
+        height:440px;
+    }
+
+    .feature-card{
+        padding:30px;
+    }
+
+    .instagram h2{
+        font-size:40px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        EPIC<span>EARTHBOUND</span>
+    </div>
+
+    <a
+      class="nav-btn"
+      href="https://www.instagram.com/epicearthbound_0083/"
+      target="_blank">
+      Instagram ↗
+    </a>
+
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            @EPICEARTHBOUND_0083
+        </div>
+
+        <h1>
+            SEE THE<br>
+            <span>EARTH</span>
+        </h1>
+
+        <p>
+            A visual collection of landscapes, journeys,
+            adventures and unforgettable moments captured
+            through the lens of Epic Earthbound.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#gallery" class="primary">
+                EXPLORE PHOTOS
+            </a>
+
+            <a
+              href="https://www.instagram.com/epicearthbound_0083/"
+              target="_blank"
+              class="secondary">
+              VIEW INSTAGRAM
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- GALLERY -->
+
+<section id="gallery">
+
+    <div class="section-top">
+
+        <div>
+            <h2>Photo Journal</h2>
+            <p>
+                Explore the visual world of Epic Earthbound.
+            </p>
+        </div>
+
+    </div>
+
+    <input
+      id="search"
+      class="search"
+      type="text"
+      placeholder="Search photos...">
+
+    <div class="gallery" id="photoGallery">
+
+
+        <!-- PHOTO 1 -->
+
+        <div class="photo" data-name="mountain">
+
+            <img
+            src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=90"
+            alt="Mountain">
+
+            <div class="photo-info">
+                <h3>Into The Mountains</h3>
+                <p>Earthbound Collection</p>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 2 -->
+
+        <div class="photo" data-name="forest">
+
+            <img
+            src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=90"
+            alt="Forest">
+
+            <div class="photo-info">
+                <h3>Into The Wild</h3>
+                <p>Nature Collection</p>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 3 -->
+
+        <div class="photo" data-name="ocean">
+
+            <img
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=90"
+            alt="Ocean">
+
+            <div class="photo-info">
+                <h3>Blue Horizon</h3>
+                <p>Ocean Collection</p>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 4 -->
+
+        <div class="photo" data-name="desert">
+
+            <img
+            src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=1200&q=90"
+            alt="Desert">
+
+            <div class="photo-info">
+                <h3>Golden Silence</h3>
+                <p>Desert Collection</p>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 5 -->
+
+        <div class="photo" data-name="lake">
+
+            <img
+            src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=90"
+            alt="Lake">
+
+            <div class="photo-info">
+                <h3>Beyond The Lake</h3>
+                <p>Adventure Collection</p>
+            </div>
+
+        </div>
+
+
+        <!-- PHOTO 6 -->
+
+        <div class="photo" data-name="road">
+
+            <img
+            src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=1200&q=90"
+            alt="Adventure Road">
+
+            <div class="photo-info">
+                <h3>The Road Ahead</h3>
+                <p>Journey Collection</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURED -->
+
+<section class="featured">
+
+    <div class="feature-card">
+
+        <div>
+
+            <h2>
+                Every journey has
+                a story.
+            </h2>
+
+            <p>
+                Discover the places, moments and landscapes
+                that make our planet extraordinary.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- INSTAGRAM -->
+
+<section class="instagram">
+
+    <h2>
+        Follow The Journey
+    </h2>
+
+    <p>
+        New adventures and photographs are posted on
+        Instagram. Follow @epicearthbound_0083 to see
+        the latest captures.
+    </p>
+
+    <a
+      class="instagram-btn"
+      href="https://www.instagram.com/epicearthbound_0083/"
+      target="_blank">
+      📸 @epicearthbound_0083
+    </a>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div>
+        © 2026 <span>Epic Earthbound</span>
+    </div>
+
+    <div>
+        Photography • Travel • Earth
+    </div>
+
+</footer>
+
+
+<!-- LIGHTBOX -->
+
+<div id="lightbox">
+
+    <div class="close" onclick="closeLightbox()">×</div>
+
+    <img id="lightboxImg">
+
+</div>
+
+
+<script>
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+const photos=document.querySelectorAll(".photo");
+const lightbox=document.getElementById("lightbox");
+const lightboxImg=document.getElementById("lightboxImg");
+
+photos.forEach(photo=>{
+
+    photo.addEventListener("click",()=>{
+
+        const img=photo.querySelector("img");
+
+        lightboxImg.src=img.src;
+
+        lightbox.style.display="flex";
+
+    });
+
+});
+
+function closeLightbox(){
+
+    lightbox.style.display="none";
+
+}
+
+lightbox.addEventListener("click",e=>{
+
+    if(e.target===lightbox){
+        closeLightbox();
+    }
+
+});
+
+
+/* =========================
+   SEARCH
+========================= */
+
+const search=document.getElementById("search");
+
+search.addEventListener("input",()=>{
+
+    const value=search.value.toLowerCase();
+
+    photos.forEach(photo=>{
+
+        const name=photo.dataset.name;
+
+        if(name.includes(value)){
+            photo.style.display="block";
+        }else{
+            photo.style.display="none";
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
